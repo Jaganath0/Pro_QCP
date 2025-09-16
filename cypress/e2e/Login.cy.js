@@ -29,11 +29,29 @@ describe('Visit CarePoint login page', () => {
 
   it('login with blank credentials', () => {
     cy.get(selectors.submit).click();
-    // cy.get('body').then($body => {
-    //   const text = $body.text();
-    //   expect(text.includes('required') || text.includes('Username')).to.be.true;
-    // });
+    cy.get('body').then($body => {
+     cy.get(selectors.email).then(($el) => {
+      expect($el[0].validationMessage).to.eq('Please fill out this field.');});
+    });
   });
+  //login with blank password
+  it('login with blank email', () => {
+    cy.get(selectors.password).type('somepassword');
+    cy.get(selectors.submit).click();
+    cy.get('body').then($body => {
+     cy.get(selectors.email).then(($el) => {
+      expect($el[0].validationMessage).to.eq('Please fill out this field.');});
+     });
+    });
+  //login with blank email or username
+  it('login with blank password', () => {
+    cy.get(selectors.email).type('someemail');
+    cy.get(selectors.submit).click();
+    cy.get('body').then($body => {
+     cy.get(selectors.password).then(($el) => {
+      expect($el[0].validationMessage).to.eq('Please fill out this field.');});
+      });
+    });
 ///login with invalid credentials
   it('login with invalid credentials', () => {
     cy.get(selectors.email).type('invalidUser');
