@@ -23,3 +23,8 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+// cypress/support/commands.js
+Cypress.Commands.overwrite('log', (originalFn, message) => {
+  // custom behavior here
+  originalFn(message); // call the original
+});

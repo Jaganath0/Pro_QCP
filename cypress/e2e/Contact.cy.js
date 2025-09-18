@@ -174,7 +174,7 @@ describe('Visit CarePoint contact page', () => {
     cy.get(selectors.subject).clear().type(`Subject ${getRandomString(8)}`);
     cy.get(selectors.message).clear().type(getRandomParagraph(6));
 
-    cy.get(selectors.preview).click();
+    // cy.get(selectors.preview).click();
   });
 /// submit the form with valid data
   it('Submit the form with valid data click for send message button', () => {

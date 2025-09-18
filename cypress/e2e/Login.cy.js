@@ -62,7 +62,7 @@ describe('Visit CarePoint login page', () => {
 ///login with valid credentials
   it('login with valid credentials', () => {
     cy.get(selectors.email).type('babagif706');
-    cy.get(selectors.password).type('1234567');
+    cy.get(selectors.password).type('123456');
     cy.get(selectors.submit).click();
 
     // Confirm redirect away from login page
