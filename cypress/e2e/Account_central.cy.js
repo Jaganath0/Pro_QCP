@@ -16,6 +16,18 @@ const selectors = {
   facility_phone: '/html[1]/body[1]/app-root[1]/div[1]/app-account-edit[1]/form[1]/mat-card[1]/mat-card-content[1]/div[1]/mat-card[2]/mat-card-content[1]/div[5]/mat-form-field[1]/div[1]/div[2]/div[1]/input[1]',
   next_btn: '.next-btn > .mdc-button__label',
   previous_btn: '.mat-warn > .mdc-button__label',
+  address_line: '/html[1]/body[1]/app-root[1]/div[1]/app-account-edit[1]/form[1]/mat-card[1]/mat-card-content[1]/div[1]/mat-card[1]/mat-card-content[1]/div[1]/mat-form-field[1]/div[1]/div[2]/div[1]/input[1]',
+  next_btn1: '.mat-primary > .mdc-button__label',
+  city: '/html[1]/body[1]/app-root[1]/div[1]/app-account-edit[1]/form[1]/mat-card[1]/mat-card-content[1]/div[1]/mat-card[1]/mat-card-content[1]/div[3]/mat-form-field[1]/div[1]/div[2]/div[1]/input[1]',
+  country_drop: '/html[1]/body[1]/app-root[1]/div[1]/app-account-edit[1]/form[1]/mat-card[1]/mat-card-content[1]/div[1]/mat-card[1]/mat-card-content[1]/div[4]/mat-form-field[1]/div[1]/div[2]/div[1]/mat-select[1]/div[1]/div[1]',
+  state_drop: '/html[1]/body[1]/app-root[1]/div[1]/app-account-edit[1]/form[1]/mat-card[1]/mat-card-content[1]/div[1]/mat-card[1]/mat-card-content[1]/div[5]/mat-form-field[1]/div[1]/div[2]/div[1]/mat-select[1]/div[1]/div[1]',
+  postal_code: '/html[1]/body[1]/app-root[1]/div[1]/app-account-edit[1]/form[1]/mat-card[1]/mat-card-content[1]/div[1]/mat-card[1]/mat-card-content[1]/div[6]/mat-form-field[1]/div[1]/div[2]/div[1]/input[1]',
+  country_select: '/html[1]/body[1]/div[3]/div[2]/div[1]/div[1]/mat-option[247]',
+  select_state: '/html[1]/body[1]/div[3]/div[2]/div[1]/div[1]/mat-option[2]',
+  next_btn2: '.mat-primary > .mdc-button__label',
+  same_checkbox: '/html[1]/body[1]/app-root[1]/div[1]/app-account-edit[1]/form[1]/mat-card[1]/mat-card-content[1]/div[1]/div[1]/mat-checkbox[1]/div[1]/div[1]/input[1]',
+  terms_checkbox: '/html[1]/body[1]/app-root[1]/div[1]/app-account-edit[1]/form[1]/mat-card[1]/mat-card-content[1]/div[1]/div[2]/mat-checkbox[1]/div[1]/div[1]/input[1]',
+
 
 };
 
@@ -225,9 +237,328 @@ it('Click Next button with valid details and verify navigation to next step', ()
   cy.get(selectors.previous_btn).click({ force: true}, { timeout: 10000 });
   cy.get(selectors.next_btn).click({ force: true } , { timeout: 10000 }); 
 });
+//// click on next button in address details without entering address line
+it('Click Next button in Address Details without entering Address Line and verify validation message', () => {
+  login('stha.luna0811@gmail.com', 'Anchor@17');
+  goToAccountCentral();
+  cy.get(selectors.edit_account_details, { timeout: 20000 })
+    .should('be.visible')
+    .click({ force: true });
+  // Fill in valid details to reach Address Details step
+  cy.xpath(selectors.facility_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })   
+    .type('Valid Facility Name', { force: true });
+  cy.xpath(selectors.department_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Department', { force: true });
+  cy.xpath(selectors.contact_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Contact Name', { force: true });
+  cy.xpath(selectors.tittle, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Title', { force: true });
+  cy.xpath(selectors.primary_phone, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('123-456-7890', { force: true });
+  // Click Next to reach Address Details step
+  cy.get(selectors.next_btn).click({ force: true }, { timeout: 10000 });
+  // Clear Address Line field and trigger blur
+  cy.xpath(selectors.address_line, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .blur(); 
+  // Click Next button
+  cy.get(selectors.next_btn1).click({ force: true }); 
+  // Assert validation message globally inside the form
+  cy.get('form', { timeout: 10000 })
+    .contains('Address Line 1 is required')
+    .should('be.visible');});
+//// click on next button in address with out city
+it('Click Next button in Address Details without entering City and verify validation message', () => {
+  login('stha.luna0811@gmail.com', 'Anchor@17');
+  goToAccountCentral();
+  cy.get(selectors.edit_account_details, { timeout: 20000 })
+    .should('be.visible')
+    .click({ force: true });
+  // Fill in valid details to reach Address Details step
+  cy.xpath(selectors.facility_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Facility Name', { force: true });
+  cy.xpath(selectors.department_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Department', { force: true });
+  cy.xpath(selectors.contact_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Contact Name', { force: true });
+  cy.xpath(selectors.tittle, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Title', { force: true });
+  cy.xpath(selectors.primary_phone, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('123-456-7890', { force: true }); 
+  // Click Next to reach Address Details step
+  cy.get(selectors.next_btn).click({ force: true }, { timeout: 10000 });
+  // Fill in Address Line to proceed
+  cy.xpath(selectors.address_line, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('123 Main St', { force: true });
+  // Clear City field and trigger blur
+  cy.xpath(selectors.city, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .blur();
+  // Click Next button
+  cy.get(selectors.next_btn1).click({ force: true });
+  // Assert validation message globally inside the form
+  cy.get('form', { timeout: 10000 })
+    .contains('City is required')
+    .should('be.visible');
+});
+/// check country dropdown
+it('Check Country dropdown and state dropdown functionality in Address Details', () => {
+  login('stha.luna0811@gmail.com', 'Anchor@17');
+  goToAccountCentral();
+  cy.get(selectors.edit_account_details, { timeout: 20000 })
+    .should('be.visible')
+    .click({ force: true });
+  // Fill in valid details to reach Address Details step    
+  cy.xpath(selectors.facility_name, { timeout: 10000 })
+    .should('be.visible')     
+    .clear({ force: true })
+    .type('Valid Facility Name', { force: true });
+  cy.xpath(selectors.department_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Department', { force: true });
+  cy.xpath(selectors.contact_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Contact Name', { force: true });
+  cy.xpath(selectors.tittle, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Title', { force: true });
+  cy.xpath(selectors.primary_phone, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('123-456-7890', { force: true });
+  // Click Next to reach Address Details step
+  cy.get(selectors.next_btn).click({ force: true }, { timeout: 10000 });
+  // Fill in Address Line to proceed
+  cy.xpath(selectors.address_line, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('123 Main St', { force: true });
+  // Fill in City to proceed
+  cy.xpath(selectors.city, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Sample City', { force: true });
+  // Interact with Country dropdown and state dropdown
+  cy.xpath(selectors.country_drop, { timeout: 10000 })
+    .should('be.visible')
+    .click({ force: true });
+    cy.xpath(selectors.state_drop, { timeout: 10000 })
+    .should('be.visible')
+    .click({ force: true });
+});
+/// click next button without postal code
+it('click next button without entering postal code and verify validation message', () => {
+  login('stha.luna0811@gmail.com', 'Anchor@17');
+  goToAccountCentral();
+  cy.get(selectors.edit_account_details, { timeout: 20000 })
+    .should('be.visible')
+    .click({ force: true });
+  // Fill in valid details to reach Address Details step
+  cy.xpath(selectors.facility_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Facility Name', { force: true });
+  cy.xpath(selectors.department_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Department', { force: true });
+  cy.xpath(selectors.contact_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Contact Name', { force: true });
+  cy.xpath(selectors.tittle, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Title', { force: true });
+  cy.xpath(selectors.primary_phone, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('123-456-7890', { force: true });
+  // Click Next to reach Address Details step
+  cy.get(selectors.next_btn).click({ force: true }, { timeout: 10000 });
+  // Fill in Address Line to proceed
+  cy.xpath(selectors.address_line, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('123 Main St', { force: true });
+  // Fill in City to proceed
+  cy.xpath(selectors.city, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Sample City', { force: true });
+  // Interact with Country dropdown and state dropdown
+  // cy.xpath(selectors.country_drop, { timeout: 10000 })
+  //   .should('be.visible')
+  //   .click({ force: true });
+  // cy.xpath(selectors.country_select, { timeout: 10000 })
+  //   .should('be.visible')
+  //   .click({ force: true });  
+  // cy.xpath(selectors.state_drop, { timeout: 10000 })
+  //   .should('be.visible')
+  //   .click({ force: true });  
+  // cy.xpath(selectors.select_state, { timeout: 10000 })
+    // .should('be.visible')
+    // .click({ force: true });  
+  // Clear Postal Code field and trigger blur
+  cy.xpath(selectors.postal_code, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .blur();
+  // Click Next button
+  cy.get(selectors.next_btn1).click({ force: true });
+  // Assert validation message globally inside the form
+  cy.get('form', { timeout: 10000 })
+    .contains('Zip/Postal Code is required')
+    .should('be.visible');
+});
+/// click next button with valid details
+it('Click Next button with valid details and verify navigation to next step', () => {
+  login('stha.luna0811@gmail.com', 'Anchor@17');
+  goToAccountCentral();
+  cy.get(selectors.edit_account_details, { timeout: 20000 })
+    .should('be.visible')
+    .click({ force: true });
+  // Fill in valid details 
+  cy.xpath(selectors.facility_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })   
+    .type('Valid Facility Name', { force: true });
+  cy.xpath(selectors.department_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })   
+    .type('Valid Department', { force: true }); 
+  cy.xpath(selectors.contact_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true }) 
+    .type('Valid Contact Name', { force: true });
+  cy.xpath(selectors.tittle, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true }) 
+    .type('Valid Title', { force: true });
+  cy.xpath(selectors.primary_phone, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true }) 
+    .type('123-456-7890', { force: true });
+  // Click Next button
+  cy.get(selectors.next_btn).click({ force: true } , { timeout: 10000 });
+  // Fill in Address Line to proceed
+  cy.xpath(selectors.address_line, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('123 Main St', { force: true });
+  // Fill in City to proceed
+  cy.xpath(selectors.city, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Sample City', { force: true });
+  // Interact with Country dropdown and state dropdown
+  // cy.xpath(selectors.country_drop, { timeout: 10000 })
+  //   .should('be.visible')
+  //   .click({ force: true });
+  //   cy.xpath(selectors.country_select, { timeout: 10000 })
+  //   .should('be.visible')
+  //   .click({ force: true });  
+  // cy.xpath(selectors.state_drop, { timeout: 10000 })
+  //   .should('be.visible')
+  //   .click({ force: true });
+  //   cy.xpath(selectors.select_state, { timeout: 10000 })
+  //   .should('be.visible')
+  //   .click({ force: true });  
+  // Fill in Postal Code to proceed 
+  cy.xpath(selectors.postal_code, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('12345', { force: true });      
+  // Click Next button to proceed
+  cy.get(selectors.next_btn1).click({ force: true } , { timeout: 10000 });  
+  // Click Next button to proceed
+  cy.get(selectors.next_btn2).click({ force: true } , { timeout: 10000 });
+});
+/// check the checkbox functionality
+it('Check the checkbox functionality in Additional Details step of same as above and terms', () => {
+  login('stha.luna0811@gmail.com', 'Anchor@17');
+  goToAccountCentral();
+  cy.get(selectors.edit_account_details, { timeout: 20000 })
+    .should('be.visible')
+    .click({ force: true });
+  // Fill in valid details to reach Additional Details step
+  cy.xpath(selectors.facility_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Valid Facility Name', { force: true });
+  cy.xpath(selectors.department_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })   
+    .type('Valid Department', { force: true });
+  cy.xpath(selectors.contact_name, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })   
+    .type('Valid Contact Name', { force: true });
+  cy.xpath(selectors.tittle, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })   
+    .type('Valid Title', { force: true });
+  cy.xpath(selectors.primary_phone, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })   
+    .type('123-456-7890', { force: true });
+  // Click Next to reach Address Details step
+  cy.get(selectors.next_btn).click({ force: true }, { timeout: 10000 });  
+  // Fill in Address Line to proceed
+  cy.xpath(selectors.address_line, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('123 Main St', { force: true });
+  // Fill in City to proceed
+  cy.xpath(selectors.city, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('Sample City', { force: true });
+ 
+  cy.xpath(selectors.postal_code, { timeout: 10000 })
+    .should('be.visible')
+    .clear({ force: true })
+    .type('12345', { force: true });
+  // Click Next button to reach Additional Details step
+  cy.get(selectors.next_btn1).click({ force: true }, { timeout: 10000 });  
+  cy.get(selectors.next_btn2).click({ force: true }, { timeout: 10000 });
+  // Interact with "Same as Above" checkbox
+  cy.xpath(selectors.same_checkbox, { timeout: 10000 })
+    .should('be.visible')
+    .check({ force: true }) // Use check() for checkboxes
+    .should('be.unchecked'); // Verify it's checked
+
+});
 });
 
-
+ 
 
 
 

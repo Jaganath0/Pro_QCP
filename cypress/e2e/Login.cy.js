@@ -61,8 +61,8 @@ describe('Visit CarePoint login page', () => {
   });
 ///login with valid credentials
   it('login with valid credentials', () => {
-    cy.get(selectors.email).type('babagif706');
-    cy.get(selectors.password).type('123456');
+    cy.get(selectors.email).type('stha.luna0811@gmail.com');
+    cy.get(selectors.password).type('Anchor@17');
     cy.get(selectors.submit).click();
 
     // Confirm redirect away from login page
