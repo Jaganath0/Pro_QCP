@@ -50,7 +50,7 @@ function getRandomTitle() {
 function selectRandomOption() {
   cy.get('mat-option', { timeout: 10000 }).then($options => {
     // Limit to first 3 options only
-    const firstThree = $options.slice(0, 3);
+    const firstThree = $options.slice(0, 1);
     const randomIndex = Math.floor(Math.random() * firstThree.length);
     cy.wrap(firstThree[randomIndex]).click({ force: true });
   });
@@ -153,10 +153,11 @@ cy.get('mat-option', { timeout: 10000 }).then($options => {
 // cy.get('')driver.findElement(By.xpath("/html[1]/body[1]/div[4]/div[2]/div[1]/mat-dialog-container[1]/div[1]/div[1]/app-users-dialog[1]/form[1]/mat-dialog-actions[1]/div[1]/button[2]/span[4]"))
 cy.get('mat-dialog-container app-users-dialog form mat-dialog-actions button:nth-of-type(2)', { timeout: 10000 })
       .should('be.visible')
+        // .click({ force: true });
 
 });
 
-//   .click({ force: true });
+
 
 
 

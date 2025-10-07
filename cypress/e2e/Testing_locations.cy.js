@@ -1,7 +1,7 @@
 
 
 const selectors = {
-     email: "#edit-name",
+   email: "#edit-name",
   password: "#edit-pass",
   submit: "#edit-submit",
 testing_locations: '/html[1]/body[1]/app-root[1]/div[1]/app-account-central[1]/section[1]/mat-tab-group[1]/mat-tab-header[1]/div[1]/div[1]/div[1]/div[4]',

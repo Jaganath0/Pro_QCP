@@ -59,6 +59,12 @@ describe('CarePoint Login and Account Central', () => {
     cy.get('[data-drupal-link-system-path="user/login"]', { timeout: 15000 }).click();
   });
 
+  
+  afterEach(() => {
+    // Wait 3 seconds after each test
+    cy.wait(3000);
+  });
+
   it('Login and go to Account Central', () => {
     login('stha.luna0811@gmail.com', 'Anchor@17'); // reusable login function
     goToAccountCentral();           // reusable navigation function
@@ -498,6 +504,7 @@ it('Click Next button with valid details and verify navigation to next step', ()
     .type('12345', { force: true });      
   // Click Next button to proceed
   cy.get(selectors.next_btn1).click({ force: true } , { timeout: 10000 });  
+  cy.wait(1000);
   // Click Next button to proceed
   cy.get(selectors.next_btn2).click({ force: true } , { timeout: 10000 });
 });
@@ -547,7 +554,8 @@ it('Check the checkbox functionality in Additional Details step of same as above
     .clear({ force: true })
     .type('12345', { force: true });
   // Click Next button to reach Additional Details step
-  cy.get(selectors.next_btn1).click({ force: true }, { timeout: 10000 });  
+  cy.get(selectors.next_btn1).click({ force: true }, { timeout: 10000 }); 
+  cy.wait(1000); 
   cy.get(selectors.next_btn2).click({ force: true }, { timeout: 10000 });
   // Interact with "Same as Above" checkbox
   cy.xpath(selectors.same_checkbox, { timeout: 10000 })
